@@ -44,7 +44,6 @@ class MixinEngine():
             self._engine_started = False
         else:
             raise EngineNotStartedException()
-        pass
 
     @property
     @add_debug
