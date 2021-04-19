@@ -101,3 +101,57 @@ Exception - ("Vehicle doesn't have enough fuel. Current fuel level - 0",)
 
 Process finished with exit code 0
 ```
+
+#### Homework 3 (Async work with DB)
+
+```
+2021-04-20 00:19:48,618 INFO sqlalchemy.engine.Engine select version()
+2021-04-20 00:19:48,618 INFO sqlalchemy.engine.Engine [raw sql] ()
+2021-04-20 00:19:48,625 INFO sqlalchemy.engine.Engine select current_schema()
+2021-04-20 00:19:48,625 INFO sqlalchemy.engine.Engine [raw sql] ()
+2021-04-20 00:19:48,631 INFO sqlalchemy.engine.Engine show standard_conforming_strings
+2021-04-20 00:19:48,631 INFO sqlalchemy.engine.Engine [raw sql] ()
+2021-04-20 00:19:48,635 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2021-04-20 00:19:48,636 INFO sqlalchemy.engine.Engine select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%s
+2021-04-20 00:19:48,636 INFO sqlalchemy.engine.Engine [generated in 0.00013s] ('posts',)
+2021-04-20 00:19:48,641 INFO sqlalchemy.engine.Engine select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%s
+2021-04-20 00:19:48,641 INFO sqlalchemy.engine.Engine [cached since 0.005106s ago] ('comments',)
+2021-04-20 00:19:48,643 INFO sqlalchemy.engine.Engine select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%s
+2021-04-20 00:19:48,643 INFO sqlalchemy.engine.Engine [cached since 0.00707s ago] ('posts',)
+2021-04-20 00:19:48,645 INFO sqlalchemy.engine.Engine select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where pg_catalog.pg_table_is_visible(c.oid) and relname=%s
+2021-04-20 00:19:48,645 INFO sqlalchemy.engine.Engine [cached since 0.009195s ago] ('comments',)
+2021-04-20 00:19:48,648 INFO sqlalchemy.engine.Engine 
+CREATE TABLE posts (
+	id SERIAL NOT NULL, 
+	data VARCHAR, 
+	create_date TIMESTAMP WITHOUT TIME ZONE DEFAULT now(), 
+	PRIMARY KEY (id)
+)
+
+
+2021-04-20 00:19:48,649 INFO sqlalchemy.engine.Engine [no key 0.00011s] ()
+2021-04-20 00:19:48,660 INFO sqlalchemy.engine.Engine 
+CREATE TABLE comments (
+	id SERIAL NOT NULL, 
+	post_id INTEGER, 
+	data VARCHAR, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(post_id) REFERENCES posts (id)
+)
+
+
+2021-04-20 00:19:48,660 INFO sqlalchemy.engine.Engine [no key 0.00011s] ()
+2021-04-20 00:19:48,670 INFO sqlalchemy.engine.Engine COMMIT
+2021-04-20 00:19:49,444 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2021-04-20 00:19:49,445 INFO sqlalchemy.engine.Engine INSERT INTO posts (id, data) VALUES (%s, %s) RETURNING posts.create_date
+2021-04-20 00:19:49,445 INFO sqlalchemy.engine.Engine [generated in 0.00017s] (1, 'Post 1')
+2021-04-20 00:19:49,451 INFO sqlalchemy.engine.Engine INSERT INTO posts (id, data) VALUES (%s, %s) RETURNING posts.create_date
+2021-04-20 00:19:49,451 INFO sqlalchemy.engine.Engine [cached since 0.006544s ago] (2, 'Post 2')
+2021-04-20 00:19:49,453 INFO sqlalchemy.engine.Engine INSERT INTO posts (id, data) VALUES (%s, %s) RETURNING posts.create_date
+2021-04-20 00:19:49,454 INFO sqlalchemy.engine.Engine [cached since 0.008923s ago] (3, 'Post 3')
+2021-04-20 00:19:49,456 INFO sqlalchemy.engine.Engine INSERT INTO comments (id, post_id, data) VALUES (%s, %s, %s)
+2021-04-20 00:19:49,456 INFO sqlalchemy.engine.Engine [generated in 0.00019s] ((1, 1, 'some comment'), (2, 1, 'some comment'))
+2021-04-20 00:19:49,462 INFO sqlalchemy.engine.Engine COMMIT
+
+```
+
