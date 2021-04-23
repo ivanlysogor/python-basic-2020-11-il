@@ -1,10 +1,8 @@
 from flask import Flask, request, render_template
-
 from views.flats import flat_app
 
 
 app = Flask(__name__)
-
 app.register_blueprint(flat_app, url_prefix="/flats")
 
 
