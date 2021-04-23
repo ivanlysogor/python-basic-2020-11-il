@@ -5,9 +5,7 @@ from flat import Flat
 
 flat_app = Blueprint("flat_app", __name__)
 
-
 FLATS = {}
-
 next_index = iter(range(len(FLATS), 100))
 
 
