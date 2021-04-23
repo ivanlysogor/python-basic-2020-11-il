@@ -1,0 +1,17 @@
+FROM python:3.9-buster
+
+WORKDIR /var/app
+
+RUN pip install poetry
+RUN poetry config virtualenvs.create false
+
+COPY . .
+
+RUN poetry install --no-interaction --no-ansi
+
+EXPOSE 5000
+
+CMD python manage.py db upgrade
+CMD python app.py
+
+# Use 'docker run -d -p 5000:5000 hw6' to run the application

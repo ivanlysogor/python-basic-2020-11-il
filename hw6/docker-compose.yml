@@ -1,0 +1,19 @@
+version: '3.1'
+
+services:
+
+  hw6_db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+    ports:
+      - 5432:5432
+
+  hw6_web:
+    image: hw6
+    restart: always
+    ports:
+      - 5000:5000
+    depends_on:
+      -  hw6_db
