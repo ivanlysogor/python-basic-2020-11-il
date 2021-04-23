@@ -6,11 +6,13 @@ from models.database import db
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:example@hw6_db/hw6'
+app.config['SQLALCHEMY_DATABASE_URI'] = \
+    'postgresql://postgres:example@hw6_db/hw6'
 app.register_blueprint(flat_app, url_prefix="/flats")
 
 db.init_app(app)
 migrate = Migrate(app, db)
+
 
 @app.route("/")
 def hello_index():
